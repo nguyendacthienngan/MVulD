@@ -2,8 +2,8 @@ name: MVulD-CPU
 channels:
   - conda-forge 
   - defaults
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  # - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch
+  # - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
 dependencies:
   - python=3.8 
   - pip
