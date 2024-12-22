@@ -35,9 +35,27 @@ You can download the Big-Vul dataset and process it refer to `baselines/README.m
 
 You can download the Big-Vul dataset and process it as follows:
 
+Place the Dataset: Since you have downloaded the final balanced dataset, place the extracted dataset folder (it should be named balanced) directly under the storage/processed/bigvul directory. Your directory structure should look like this:
+
+MVulD/
+├── storage/
+│   └── cache/
+│       └── data/
+│           └── bigvul/
+│               └── ... (dataset files)
+└── ... (other project files)
+
+Place the pkl file to 2 places:
+- MVulD/baselines/storage/cache/data/bigvul/bigvul_cleaned_guo3_balanced.pkl
+
+- MVulD/baselines/storage/cache/data/bigvul/bigvul_cleaned3_balanced.pkl
+
 ### Step 1: Clean Code 
 
 Run `scripts/process_dataset.py` to clean dataset and remove abnormal functions, which also get the glove, word2vec and other models that will be used to initialize node embedding by the graph model.
+
+Run by: python scripts/process_dataset.py --dataset bigvul
+
 
 ### Step 2: Graph Extraction: Generate CPGs with the help of joern
 
@@ -102,10 +120,10 @@ To train and test MVulD model, using the following commands.
 cd MVulD
 
 # train
-CUDA_VISIBLE_DEVICES=1 python -m torch.distributed.launch --nproc_per_node 1 --master_port 10055 main_bigvul.py --cfg configs/mySwin/swinv2_base_patch4_window24to28_384to448_1ktoMYDATA_ft.yaml --batch-size 4
+CUDA_VISIBLE_DEVICES=1 torchrun --nproc_per_node 1 --master_port 10055 main_bigvul.py --cfg configs/mySwin/swinv2_base_patch4_window24to28_384to448_1ktoMYDATA_ft.yaml --batch-size 4  --local_rank=1
 
 # test
-CUDA_VISIBLE_DEVICES=1 python -m torch.distributed.launch --nproc_per_node 1 --master_port 21129 main_bigvul.py --cfg configs/mySwin/swinv2_base_patch4_window24to28_384to448_1ktoMYDATA_ft.yaml --batch-size 4 --test 1
+CUDA_VISIBLE_DEVICES=1 torchrun --nproc_per_node 1 --master_port 21129 main_bigvul.py --cfg configs/mySwin/swinv2_base_patch4_window24to28_384to448_1ktoMYDATA_ft.yaml --batch-size 4 --test 1
 
 ```
 
