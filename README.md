@@ -31,6 +31,23 @@ And we normalize the source code by performing three filtering steps on the Big-
 Our final dataset contains 25,816 functions in total, including 4,069 vulnerable functions and 21,747 non-vulnerable functions.
 You can download the Big-Vul dataset and process it refer to `baselines/README.md`, or you can also download the preprocessed dataset from [HERE](https://drive.google.com/file/d/16tm5TU9CUCePFg6wJh2kz71SZylKv8zw/view?usp=sharing) and unzip it.
 
+## Dataset process
+
+You can download the Big-Vul dataset and process it as follows:
+
+### Step 1: Clean Code 
+
+Run `scripts/process_dataset.py` to clean dataset and remove abnormal functions, which also get the glove, word2vec and other models that will be used to initialize node embedding by the graph model.
+
+### Step 2: Graph Extraction: Generate CPGs with the help of joern
+
+Run `scripts/processJoern.py` to extract .c file and run Joern to get corresponding edges.json and nodes.json.
+
+### Step 3: Image Generation
+
+Run `scripts/getImages.py` to check data after Joern and resample the data to produce [the final balanced dataset](https://drive.google.com/file/d/16tm5TU9CUCePFg6wJh2kz71SZylKv8zw/view), and then generate images(i.e.,CPG).
+
+
 # 4. Source Code
 
 ## 4.1 Conda environment
