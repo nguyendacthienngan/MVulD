@@ -51,7 +51,7 @@ def generate_w2v(dataset="bigvul", sample=False, cache=True, embedding_size=100,
 def train_w2v(sentences, embedding_size=100, epochs=5,
               window_size=10):
     print('Total Examples:', len(sentences))
-    wvmodel = Word2Vec(sentences, workers=16, size=embedding_size, window=window_size)
+    wvmodel = Word2Vec(sentences, workers=16, vector_size=embedding_size, window=window_size)
     print('Embedding Size : ', wvmodel.vector_size) 
 
     for _ in tqdm(range(epochs), total=epochs):
