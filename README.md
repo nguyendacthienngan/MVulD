@@ -115,12 +115,33 @@ To obtain the positional feature embedding, we use OCR techniques to detect text
 ## 4.6 Multi-modal feature fusion:
 
 To train and test MVulD model, using the following commands. 
+/MVulD/MVulD/baselines/storage/processed/bigvul
+bigvul/
+    glove_False/
+    w2v_False/
+    func_before/
+    ast/
+    glove_False/
+    w2v_False/
+    func_before/
+    ast/
+        valid/
+        test/
+        valid/
+            clean/
+            clean/
+        test/
+            clean/
+            clean/
 
 ```shell
 cd MVulD
 
 # train
 CUDA_VISIBLE_DEVICES=1 torchrun --nproc_per_node 1 --master_port 10055 main_bigvul.py --cfg configs/mySwin/swinv2_base_patch4_window24to28_384to448_1ktoMYDATA_ft.yaml --batch-size 4  --local_rank=1
+
+# T4
+CUDA_VISIBLE_DEVICES=0 torchrun --nproc_per_node 1 --master_port 12826 main.py --cfg configs/mySwin/swinv2_base_patch4_window24to28_384to448_1ktoMYDATA_ft.yaml --pretrained swinv2_base_patch4_window12to24_192to384_22kto1k_ft.pth --batch-size 4 --test_data_path /content/drive/MyDrive/ColabNotebooks/MVulD/MVulD/baselines/storage/processed/bigvul/ast/test.txt  --local_rank=0
 
 # test
 CUDA_VISIBLE_DEVICES=1 torchrun --nproc_per_node 1 --master_port 21129 main_bigvul.py --cfg configs/mySwin/swinv2_base_patch4_window24to28_384to448_1ktoMYDATA_ft.yaml --batch-size 4 --test 1

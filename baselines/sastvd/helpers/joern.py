@@ -339,10 +339,15 @@ def get_node_edges(filepath: str, verbose=0):
             lineNum = linemap[e.innode]
             node_label = f"TYPE_{lineNum}: {typemap[int(e.outnode.split('_')[0])]}"
             # Use pandas.concat instead：原先append
-            nodes = nodes.append(
-                {"id": e.outnode, "node_label": node_label, "lineNumber": lineNum},
-                ignore_index=True,
-            )
+            # nodes = nodes.append(
+            #     {"id": e.outnode, "node_label": node_label, "lineNumber": lineNum},
+            #     ignore_index=True,
+            # )
+
+            # nodes = pd.concat([nodes, {"id": e.outnode, "node_label": node_label, "lineNumber": lineNum}], ignore_index=True)
+            # nodes = pd.concat([nodes, pd.DataFrame({"id": e.outnode, "node_label": node_label, "lineNumber": lineNum})], ignore_index=True)
+            nodes = pd.concat([nodes, pd.DataFrame({"id": e.outnode, "node_label": node_label, "lineNumber": lineNum}, index=[0])], ignore_index=True)
+
             
             # nodes = pd.concat(
             #     [nodes,{"id": e.outnode, "node_label": node_label, "lineNumber": lineNum}],

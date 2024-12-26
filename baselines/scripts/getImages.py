@@ -233,23 +233,37 @@ if __name__ == "__main__":
     
     
     # print(valid_df.func_before.nunique()) # 
-    if not balanced_df_path.exists():
-        train_df = df[df.partition == "train"] 
-        print(f"train_df len=:{len(train_df)}")
-        train_balance_df,valid_df,test_df = rebalanceData(df)
-        print(f"train_balance_df =:{len(train_balance_df)}")
-        print(f"valid_df len =:{len(valid_df)}")
-        print(f"test_df len = :{len(test_df)}")
-        df = pd.concat([train_balance_df,valid_df,test_df])
-        print(df.info()) # 25816
-        print(df["partition"].value_counts()) # 6510/9653/9653
-        print(df._id.nunique()) #
-        df.to_pickle(balanced_df_path) # balanced df
-    else:
-        df = pd.read_pickle(balanced_df_path)
-        train_df = df[df.partition == "train"]
-        valid_df = df[df.partition == "valid"]
-        test_df = df[df.partition == "test"]
+    # if not balanced_df_path.exists():
+    #     train_df = df[df.partition == "train"] 
+    #     print(f"train_df len=:{len(train_df)}")
+    #     train_balance_df,valid_df,test_df = rebalanceData(df)
+    #     print(f"train_balance_df =:{len(train_balance_df)}")
+    #     print(f"valid_df len =:{len(valid_df)}")
+    #     print(f"test_df len = :{len(test_df)}")
+    #     df = pd.concat([train_balance_df,valid_df,test_df])
+    #     print(df.info()) # 25816
+    #     print(df["partition"].value_counts()) # 6510/9653/9653
+    #     print(df._id.nunique()) #
+    #     df.to_pickle(balanced_df_path) # balanced df
+    # else:
+    #     df = pd.read_pickle(balanced_df_path)
+    #     train_df = df[df.partition == "train"]
+    #     valid_df = df[df.partition == "valid"]
+    #     test_df = df[df.partition == "test"]
+
+    
+    train_df = df[df.partition == "train"] 
+    print(f"train_df len=:{len(train_df)}")
+    train_balance_df,valid_df,test_df = rebalanceData(df)
+    print(f"train_balance_df =:{len(train_balance_df)}")
+    print(f"valid_df len =:{len(valid_df)}")
+    print(f"test_df len = :{len(test_df)}")
+    df = pd.concat([train_balance_df,valid_df,test_df])
+    print(df.info()) # 25816
+    print(df["partition"].value_counts()) # 6510/9653/9653
+    print(df._id.nunique()) #
+    df.to_pickle(balanced_df_path) # balanced df
+
     ## test feature extraction
     # my_id = itempath(52) # 
     # feature_extraction(my_id,graph_type="all")

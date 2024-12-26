@@ -4,11 +4,12 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 import sys
-path1 = os.path.dirname(sys.path[0])
-sys.path.append(path1)
 import os
 
 from torchmetrics import F1Score
+
+path1 = os.path.dirname(sys.path[0])
+sys.path.append(path1)
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 # os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
 import time
@@ -44,7 +45,7 @@ from sklearn.metrics import (
 from config import get_config
 from models import build_model
 from data import build_loader
-from project.MMVD.mmvd.lr_scheduler import build_scheduler
+from lr_scheduler import build_scheduler
 from optimizer import build_optimizer
 from logger import create_logger
 from utils import load_checkpoint, load_pretrained, save_checkpoint, NativeScalerWithGradNormCount, auto_resume_helper, \
@@ -66,6 +67,7 @@ def parse_option():
     # easy config modification
     parser.add_argument('--batch-size', type=int, help="batch size for single GPU")
     parser.add_argument('--data-path', type=str, help='path to dataset')
+    parser.add_argument('--test_data_path', type=str, help='path to test dataset')
     parser.add_argument('--zip', action='store_true', help='use zipped dataset instead of folder dataset')
     parser.add_argument('--cache-mode', type=str, default='part', choices=['no', 'full', 'part'],
                         help='no: no cache, '
@@ -469,6 +471,8 @@ if __name__ == '__main__':
     else:
         rank = -1
         world_size = -1
+    print("LOCAL_RANK:")
+    print(config.LOCAL_RANK)
     torch.cuda.set_device(config.LOCAL_RANK) #
     
     torch.distributed.init_process_group(backend='nccl', init_method='env://', world_size=world_size, rank=rank)

@@ -6,6 +6,7 @@ import pandas as pd
 from pathlib import Path
 from tqdm import tqdm
 import argparse
+import csv
 
 sys.path.append(str((Path(__file__).parent.parent))) 
 # ----------
@@ -158,7 +159,11 @@ if __name__ == '__main__':
         filename ="MSR_data_cleaned.csv"
         data_path=cache_dir() /'data'/ dataset/filename
         print(data_path)
-        df = pd.read_csv(data_path)
+        # df = pd.read_csv(data_path, on_bad_lines="skip")
+        # https://coderforyou.medium.com/parsererror-error-tokenizing-data-c-error-eof-inside-string-starting-at-row-39665-284ef0424075
+        # df = pd.read_csv(data_path, header = None, delimiter="\t", quoting=csv.QUOTE_NONE, encoding='utf-8')
+        df = pd.read_csv(data_path, on_bad_lines='skip')
+
         print(df.info())
         dfv = df[df.vul==1]
         print(f"original dataset len(df)={len(df)} and len(dfv)={len(dfv)}")

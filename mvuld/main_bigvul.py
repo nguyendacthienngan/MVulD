@@ -50,7 +50,7 @@ from sklearn.metrics import (
 from config import get_config
 from models import build_model
 from data.bigvul_dataset import bigvul_dataset,bigvul_loader_graph
-from project.MMVD.mmvd.lr_scheduler import build_scheduler
+from lr_scheduler import build_scheduler
 from optimizer import build_optimizer
 from logger import create_logger
 # from utils import load_checkpoint, load_pretrained, save_checkpoint, NativeScalerWithGradNormCount, auto_resume_helper, \
